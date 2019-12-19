@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.CommodityMapper">
+    <!-- 实现的方法名  resultType:返回值类型(全限定名) parameterType:方法参数类型-->
+    <!--查询所有商品-->
+    <select id="selectAllCommodity" resultType="Commodity" parameterType="Commodity" >
+        select * from commodity
+        WHERE admin_id=#{admin_id};
+    </select>
+    <!--查询分类商品-->
+    <select id="selectCommodity" resultType="Commodity" parameterType="Commodity" >
+        select * from commodity
+        WHERE kind=#{kind} and admin_id=#{admin_id};
+    </select>
+    <!--删除商品-->
+    <delete id="deleteCommodity">
+        delete from commodity where id=#{id}
+    </delete>
+    <!--添加商品-->
+    <insert id="addCommodity" parameterType="Commodity">
+        insert into commodity (name,price,sales,stock,date,img_src,admin_id,kind)
+        values (#{name},#{price},#{sales},#{stock},#{date},#{img_src},#{admin_id},#{kind})
+    </insert>
+    <!--修改商品-->
+    <update id="updateCommodity" parameterType="Commodity">
+        update commodity set name=#{name},price=#{price},sales=#{sales},
+        stock=#{stock},date=#{date},admin_id=#{admin_id},kind=#{kind}
+        where id=#{id}
+    </update>
+    <!--分页-->
+    <select id="selectByPage" resultType="com.yijiayifeng.entity.Commodity" parameterType="Integer">
+        select * from commodity limit #{page},#{rows}
+    </select>
+    <!--分页所需的数据总条数-->
+    <select id="selectCommodityCount" resultType="Integer">
+        select count(*) from commodity
+    </select>
+    <!--类别分页-->
+    <select id="selectKindByPage" resultType="Commodity">
+        select *
+        from commodity
+        where kind = #{kind}
+        limit #{page},#{rows}
+    </select>
+    <!--类别分页需要的数据总条数-->
+    <select id="selectKindCount" resultType="Integer">
+        select count(*)
+        from commodity
+        where kind = #{kind}
+    </select>
+</mapper>

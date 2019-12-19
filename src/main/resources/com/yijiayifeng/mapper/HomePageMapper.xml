@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.HomePageMapper">
+    <!--//根据位置查询酒店-->
+    <select id="selectByAddressAdmin" parameterType="java.lang.String" resultType="Admin">
+      select a.name,a.address from admin a
+      where
+      a.address like '%'||#{address}||'%'
+    </select>
+</mapper>
+

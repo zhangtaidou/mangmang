@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.Admin_orderMapper">
+
+    <!--//酒店查询所有订单-->
+    <select id="selectAllOrder" resultType="Order_" parameterType="Order_">
+        select o.* from admin a LEFT JOIN order_ o
+  	    on a.id=o.admin_id
+        where o.admin_id=#{admin_id}
+    </select>
+
+    <!--查询指定日期的订单-->
+    <select id="selectByDateOrder" parameterType="Order_" resultType="Order_">
+        select * from  order_
+        where admin_id=#{admin_id}  and date between #{datea} and #{dateb}
+    </select>
+
+    <!--根据name查询酒店-->
+    <select id="selectByNameRoom" resultType="Admin">
+         select id from admin  where name  like concat('%',#{name},'%')
+    </select>
+
+    <!--根据日期结算订单-->
+   <update id="updateByDateOrder" parameterType="Order_">
+        update order_ set price_state='1'
+        where admin_id=#{admin_id} and date between #{datea} and #{dateb} and state='1'
+        or
+        admin_id=#{admin_id} and date between #{datea} and #{dateb} and state='0'
+    </update>
+
+    <!--//根据姓名查询某用户订单   //所有订单-->
+    <select id="selectByUserName" resultType="Order_" >
+      select o.* from admin a LEFT JOIN order_ o
+      on a.id=o.admin_id
+      where o.user_name=#{user_name}  and o.state!='2' and o.admin_id=#{admin_id}
+      or o.phone=#{phone}
+      and o.admin_id=#{admin_id} and o.state!='2'
+    </select>
+    <!--//根据手机号查询某用户订单   //所有订单-->
+    <select id="selectByUserPhone" resultType="Order_" >
+      select o.* from admin a LEFT JOIN order_ o
+      on a.id=o.admin_id
+      where o.user_name=#{user_name} and o.phone=#{phone} and o.admin_id=#{admin_id} and o.state!='2'
+    </select>
+
+
+    <!--//根据姓名查询某用户订单   待入住订单-->
+    <select id="selectByUserNameState" resultType="Order_" >
+      select o.* from admin a LEFT JOIN order_ o
+      on a.id=o.admin_id
+      where o.user_name=#{user_name} and o.state='2' and o.admin_id=#{admin_id}
+      or o.phone=#{phone}
+      and o.admin_id=#{admin_id} and o.state='2'
+    </select>
+
+    <!--//根据手机号查询某用户订单   待入住订单-->
+    <select id="selectByUserPhoneState" resultType="Order_" >
+      select o.* from admin a LEFT JOIN order_ o
+      on a.id=o.admin_id
+      where o.user_name=#{user_name} and o.phone=#{phone} and o.admin_id=#{admin_id} and o.state='2'
+    </select>
+
+    <!--//根据入住状态处理订单-->
+    <update id="updateState" parameterType="Order_">
+        update order_ set state=#{state}
+        where id=#{id}
+    </update>
+    <select id="selectByIdorder" parameterType="order_" resultType="order_">
+        select * from order_ where id=#{id}
+    </select>
+
+
+    <!--//根据状态查询入住用户-->
+    <select id="selectByIdState" parameterType="order_" resultType="order_">
+        select * from order_ where admin_id=#{admin_id} and state='1'
+    </select>
+
+    <!--//根据状态查询待入住-->
+    <select id="selectByIdStateNew" parameterType="order_" resultType="order_">
+        select * from order_ where admin_id=#{admin_id} and state='2'
+    </select>
+
+    <!--//根据状态查询待确认-->
+    <select id="selectByStateNext" parameterType="order_" resultType="order_">
+        select * from order_ where admin_id=#{admin_id} and state='3'
+    </select>
+
+    <!--//根据状态查询已拒绝订单-->
+    <select id="selectByStateNoNext" parameterType="order_" resultType="order_">
+        select * from order_ where admin_id=#{admin_id} and state='4'
+    </select>
+
+    <!--//根据状态查询已取消订单-->
+    <select id="selectByStateNo" parameterType="order_" resultType="order_">
+        select * from order_ where admin_id=#{admin_id} and state='5'
+    </select>
+</mapper>
+
+

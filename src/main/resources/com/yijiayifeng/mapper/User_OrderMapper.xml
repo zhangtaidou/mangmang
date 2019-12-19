@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.User_OrderMapper">
+   <!-- //用户查询所有订单-->
+    <select id="selectAllUser_Order" resultType="order_" parameterType="user">
+        select o.* from order_  left join user u
+        on  u.id=o.user_id
+        where o.user_id=#{id}
+    </select>
+
+    <!--//添加订单-->
+    <insert id="addUser_order" parameterType="order_">
+        insert into order_
+        (admin_name,user_name,price,room,admin_id,user_id,phone,count,day,date,state,price_state,nuber)
+        values (#{admin_name},#{user_name},#{price},#{room},
+        #{admin_id},#{user_id},#{phone},#{count},#{day},#{date},#{state},#{price_state},#{nuber})
+    </insert>
+
+    <!--修改admin状态处理提示音-->
+    <update id="uptatePrice_state" parameterType="order_">
+        update admin set price_state=1  where id=#{admin_id}
+    </update>
+    <update id="updateStateBy" parameterType="order_">
+        update admin set price_state=0  where id=#{admin_id}
+    </update>
+
+
+    <!--查询所有酒店判断状态-->
+    <select id="selectAllAdmin" resultType="Admin" parameterType="order_">
+        select * from admin where id=#{admin_id}
+    </select>
+</mapper>
+

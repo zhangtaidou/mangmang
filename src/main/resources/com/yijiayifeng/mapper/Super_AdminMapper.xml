@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!-- 实现的接口(全限定名) -->
+<mapper namespace="com.yijiayifeng.mapper.Super_AdminMapper">
+
+    <!-- 实现的方法名  resultType:返回值类型(全限定名) parameterType:方法参数类型-->
+    <select id="select_out_Admin" resultType="Admin">
+        select * from admin
+    </select>
+
+</mapper>

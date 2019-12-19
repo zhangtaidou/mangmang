@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.ServeMapper">
+    <!--//用户添加服务-->
+    <insert id="addService" parameterType="Serve">
+        insert into serve (option,number,remarks,user_id,admin_id,state,date)
+        values (
+        #{option},#{number},#{remarks},#{user_id},#{admin_id},#{state},#{date}
+        )
+    </insert>
+    <!--//对应酒店查看服务//对应用户查看服务-->
+    <select id="selectService" resultType="Serve" parameterType="Serve">
+        select s.id,s.option,s.number,s.Remarks,s.state,s.date from serve s
+        <where>
+            <if test="#{admin_id}==null">
+                where s.user_id=#{user_id} and
+            </if>
+            <if test="#{user_id} ==null">
+                where s.admin_id=#{admin_id}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateService" parameterType="Serve">
+        update serve set
+        state='2'
+        where id=#{id}
+    </update>
+</mapper>
+

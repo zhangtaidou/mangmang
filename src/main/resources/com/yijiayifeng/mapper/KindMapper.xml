@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.KindMapper">
+
+    <!--添加对应价格-->
+    <insert id="addKind" parameterType="Kind">
+        insert into kind
+        (price,kind,room_name,admin_id)
+         values (#{price},#{kind},#{room_name},#{admin_id})
+    </insert>
+
+    <!--查询对应酒店所有房型-->
+    <select id="selectRoom" resultType="Room">
+        select r.name from room r where admin_id=#{id}
+    </select>
+
+    <!--查询对应酒店的价格类型-->
+    <select id="selectKind" resultType="Kind">
+        select k.id,k.kind,k.room_name,k.price from kind k where admin_id=#{id}
+    </select>
+
+    <!--移除价格-->
+    <delete id="deleteKind" parameterType="Kind">
+       delete from kind  where id=#{id}
+    </delete>
+
+    <!--根据价格区间查询-->
+    <select id="selectByPrice" resultType="Kind">
+        select k.id,k.kind,k.room_name,k.price from kind k
+        where admin_id=#{admin_id} and price between #{pricea} and #{priceb}
+    </select>
+
+    <!--根据价格类型和相关房型查询-->
+    <select id="selectByRoom_Name" resultType="Kind">
+        select k.id,k.kind,k.room_name,k.price from kind k
+        where admin_id=#{admin_id} and room_name=#{room_name} or admin_id=#{admin_id} and kind=#{kind}
+    </select>
+    <select id="selectByKind" resultType="Kind">
+        select k.id,k.kind,k.room_name,k.price from kind k
+        where admin_id=#{admin_id} and kind=#{kind} and room_name=#{room_name}
+    </select>
+    <!--根据价格类型和相关房型查询-->
+
+
+</mapper>
+

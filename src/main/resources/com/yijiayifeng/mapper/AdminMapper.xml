@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.AdminMapper">
+    <!--管理员登录-->
+    <select id="selectByPwd" resultType="Admin">
+        select name,id from  admin where account=#{account} and password=#{password}
+    </select>
+
+    <!--修改订单结算状态-->
+    <update id="updateByIdPrice_state">
+          update admin set price_state=0
+          where id=#{id}
+    </update>
+</mapper>
+

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.RoomMapper">
+    <!--查询所有房型-->
+    <select id="selectRoom" resultType="Room">
+        select r.* from admin a LEFT JOIN room r
+  	    on a.id=r.admin_id
+  	    where a.id=#{id}
+    </select>
+
+    <!--根据房态查询房型信息-->
+    <select id="selectByState" resultType="Room">
+        select r.* from admin a LEFT JOIN room r
+  	    on a.id=r.admin_id
+  	    where state=#{state} and a.id=#{admin_id}
+    </select>
+
+    <!--添加酒店房型-->
+    <insert id="addRoom" parameterType="Room">
+        insert into room (name,img,admin_id,introduce,state,count)
+        values (#{name},#{img},#{admin_id},#{introduce},#{state},#{count})
+    </insert>
+
+    <!--删除酒店房型-->
+    <delete id="deleteRoom" parameterType="Room">
+        delete from room  where id=#{id}
+    </delete>
+
+    <!--修改酒店房型-->
+    <update id="updateRoom" parameterType="Room">
+        update room set name=#{name},price=#{price},img=#{img},
+        grade=#{grade},admin_id=#{admin_id},introduce=#{introduce}
+        where id=#{id}
+    </update>
+
+    <!--修改房间状态-->
+    <update id="updateState" parameterType="Room">
+        update room set state=#{state}
+        where id=#{id}
+    </update>
+    <select id="selectByIdRoom" parameterType="Room" resultType="Room">
+        select * from room where id=#{id}
+    </select>
+
+
+    <select id="selectCount" resultType="Room">
+        select r.count,r.id from order_ o LEFT JOIN room r
+  	    on o.room=r.name
+  	    where o.id=#{id}
+    </select>
+    <update id="updateCount" parameterType="Room">
+        update room set count=#{count}
+        where id=#{id}
+    </update>
+
+
+</mapper>
+

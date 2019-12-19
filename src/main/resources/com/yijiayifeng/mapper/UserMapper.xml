@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yijiayifeng.mapper.UserMapper">
+    <!--用户登录-->
+    <select id="selectByPwd" resultType="User">
+        select * from user where account=#{account}  and  password=#{password}
+    </select>
+
+    <!--用户注册-->
+    <insert id="UserAdd" parameterType="User">
+        insert into user(name,phone,identification,account,password) values (#{name},#{phone},#{identification},#{account},#{password})
+    </insert>
+</mapper>
+
